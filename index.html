@@ -390,8 +390,18 @@
         display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
       }
       .ca-box .lbl { font-size: 11.5px; font-weight: 600; letter-spacing: .07em; color: var(--ink-faint); text-transform: uppercase; }
-      .ca-box .val { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 15px; }
+      .ca-box .val { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 14.5px; word-break: break-all; line-height: 1.45; }
       .ca-box .val em { font-style: normal; color: var(--violet); }
+      .copy-btn {
+        font-family: "Archivo", sans-serif; font-weight: 600; font-size: 13.5px;
+        background: var(--violet); color: #fff; border: 1px solid var(--violet);
+        border-radius: 9px; padding: 8px 16px; cursor: pointer; min-height: 38px; flex: none;
+      }
+      .copy-btn:hover { background: var(--violet-bright); }
+      .copy-btn.copied { background: var(--good); border-color: var(--good); }
+      .ca-links { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 12px; }
+      .ca-links a { font-size: 14px; font-weight: 600; color: var(--violet); text-decoration: none; }
+      .ca-links a:hover { text-decoration: underline; }
       .trade-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
       .trade-facts { margin: 24px 0 0; border-top: 1px solid var(--line); padding: 0; }
       .trade-facts div {
@@ -542,9 +552,10 @@
           <a href="#trade">Trade</a>
           <a href="#names">.clankr Names</a>
           <a href="#board">Clank Board</a>
+          <a href="#airdrop">Airdrop</a>
           <a href="#tokenomics">Tokenomics</a>
         </nav>
-        <span class="status-pill"><span class="dot" aria-hidden="true"></span><b>Pre-launch</b> · Base</span>
+        <span class="status-pill"><span class="dot" style="background:var(--good)" aria-hidden="true"></span><b>Live</b> · Base</span>
       </div>
     </header>
 
@@ -557,9 +568,9 @@
       <div class="hero">
         <div class="wrap hero-grid">
           <div>
-            <p class="hero-status"><span class="live-dot" aria-hidden="true"></span> $CLANKR · Fair launch on Base via Clanker · No presale · No insiders</p>
+            <p class="hero-status"><span class="live-dot" style="background:var(--good)" aria-hidden="true"></span> $CLANKR · Live on Base via Clanker · No presale · No insiders</p>
             <h1>Hear the <span class="clank">clank.</span><br />Be early.</h1>
-            <p class="hero-sub">Every token born on Clanker makes a sound — a <strong>clank</strong>. Clanker is the machine. <strong>Clankr is the sound it makes</strong>, and the robot that hears it first. This is the home of the launch hunters: a radar for new Clanker launches, a trade panel for $CLANKR, and a weekly board for whoever heard it earliest — all of it switching on live at launch.</p>
+            <p class="hero-sub">Every token born on Clanker makes a sound — a <strong>clank</strong>. Clanker is the machine. <strong>Clankr is the sound it makes</strong>, and the robot that hears it first. This is the home of the launch hunters: a radar for new Clanker launches, a trade panel for $CLANKR, and a weekly board for whoever heard it earliest — and $CLANKR itself is now live on Base.</p>
             <div class="hero-ctas">
               <a class="btn primary" href="#names">Reserve your .clankr name</a>
               <button class="btn ghost" id="clankBtn" type="button" aria-label="Play the clank sound">
@@ -618,7 +629,7 @@
         <div class="wrap">
           <div class="sec-head">
             <h2 id="radar-h">Launch radar</h2>
-            <p>New Clanker launches on Base, ranked by signal strength — early buyers, volume and momentum in the first minutes. The feed switches to live Base data the moment $CLANKR launches.</p>
+            <p>New Clanker launches on Base, ranked by signal strength — early buyers, volume and momentum in the first minutes. $CLANKR itself is live; the radar feed below is still a preview with sample launches.</p>
           </div>
           <div class="panel">
             <div class="panel-bar">
@@ -635,7 +646,7 @@
               <span>#</span><span>Token</span><span class="hide-m">Age</span><span>Mkt cap</span><span class="hide-m">1h</span><span>Signal</span>
             </div>
             <div id="radarRows"></div>
-            <p class="panel-note">Preview feed with sample launches so you can see how the radar reads. It goes fully live at launch — until then, don't trade on anything shown here.</p>
+            <p class="panel-note">Preview feed with sample launches so you can see how the radar reads. Don't trade on anything shown here — for the real $CLANKR, use the contract address in the trade panel.</p>
           </div>
         </div>
       </section>
@@ -645,32 +656,38 @@
         <div class="wrap">
           <div class="sec-head">
             <h2 id="trade-h">Trade $CLANKR</h2>
-            <p>$CLANKR launches fair on Clanker — the whole supply goes into the pool, in the open, at the same moment for everyone. The contract address appears here, and only here, the second it exists.</p>
+            <p>$CLANKR launched fair on Clanker — the supply went live in the open, at the same moment for everyone, with a community airdrop reserved for $CLANKER holders. The contract address is below — verify it here, and only here, before you buy.</p>
           </div>
           <div class="trade-grid">
             <div class="trade-card">
               <h3>$CLANKR / ETH · Base</h3>
               <div class="price-line">
                 <span class="price-big">— —</span>
-                <span class="price-note">Price starts ticking at launch.<br />No presale price. No private round.</span>
+                <span class="price-note">Live on Base — price ticks with trading on Clanker.<br />No presale price. No private round.</span>
               </div>
               <div class="ca-box">
                 <span class="lbl">Contract address</span>
-                <span class="val"><em>Drops at launch</em></span>
+                <span class="val" id="caValue">0xBF11cd05f53c7e9890926adB015C288D22c7Fb07</span>
+                <button class="copy-btn" id="copyCaBtn" type="button" aria-label="Copy the $CLANKR contract address">Copy</button>
+              </div>
+              <div class="ca-links">
+                <a href="https://basescan.org/token/0xBF11cd05f53c7e9890926adB015C288D22c7Fb07" target="_blank" rel="noopener">View on Basescan ↗</a>
+                <a href="https://clanker.world/clanker/0xBF11cd05f53c7e9890926adB015C288D22c7Fb07" target="_blank" rel="noopener">View on Clanker ↗</a>
               </div>
               <div class="trade-actions">
-                <button class="btn primary" type="button" disabled>Buy on Clanker — opens at launch</button>
-                <a class="btn ghost" href="https://clanker.world" target="_blank" rel="noopener">Visit Clanker ↗</a>
+                <a class="btn primary" href="https://clanker.world/clanker/0xBF11cd05f53c7e9890926adB015C288D22c7Fb07" target="_blank" rel="noopener">Buy on Clanker ↗</a>
+                <a class="btn ghost" href="https://basescan.org/token/0xBF11cd05f53c7e9890926adB015C288D22c7Fb07" target="_blank" rel="noopener">Verify on Basescan ↗</a>
               </div>
               <dl class="trade-facts">
                 <div><dt>Starting market cap</dt><dd>Low &amp; fair</dd></div>
                 <div><dt>Liquidity</dt><dd>Locked by Clanker</dd></div>
                 <div><dt>Dev buy</dt><dd>Announced in the open</dd></div>
-                <div><dt>Taxes / traps</dt><dd>Clean, sellable contract</dd></div>
+                <div><dt>Trading tax</dt><dd>3% — flat, both ways</dd></div>
+                <div><dt>Contract</dt><dd>Clean &amp; sellable</dd></div>
               </dl>
             </div>
             <div class="chart-box">
-              <h3>Signal, not noise <span class="tag">Standby</span></h3>
+              <h3>Signal, not noise <span class="tag hot">Live</span></h3>
               <svg class="chart-svg" viewBox="0 0 520 190" role="img" aria-label="Placeholder chart: a flat dashed standby line that jumps sharply upward at the launch point marked CLANK">
                 <line x1="0" y1="48" x2="520" y2="48" stroke="var(--line)" stroke-width="1" />
                 <line x1="0" y1="95" x2="520" y2="95" stroke="var(--line)" stroke-width="1" />
@@ -681,7 +698,7 @@
                 <text x="300" y="182" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600" fill="var(--ink-soft)">▲ CLANK — LAUNCH</text>
                 <text x="8" y="30" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--ink-faint)">PRICE</text>
               </svg>
-              <p class="chart-cap">The chart is flat because nothing has launched yet — exactly how a fair launch should look. When the line jumps, you'll hear it here first.</p>
+              <p class="chart-cap">$CLANKR is live — the clank has landed. The line above marks the launch point; live pricing and trading happen on the token's Clanker page, linked from the panel on the left.</p>
             </div>
           </div>
         </div>
@@ -706,7 +723,7 @@
               </li>
               <li>
                 <span class="n">C</span>
-                <p><strong>Reservations open now</strong> On-chain minting needs its own contract, so v1 is a reservation list. Check your name's shape below and hold your spot — reservations get first claim at launch.</p>
+                <p><strong>Reservations open now</strong> On-chain minting needs its own contract, so v1 is a reservation list. Check your name's shape below and hold your spot — reservations get first claim when minting opens.</p>
               </li>
             </ul>
             <div class="checker">
@@ -734,12 +751,12 @@
         <div class="wrap">
           <div class="sec-head">
             <h2 id="board-h">The weekly Clank Board</h2>
-            <p>Like ClankDex's trading games, but for ears. Every week, the hunters who caught launches earliest climb the board. Season 0 opens the day $CLANKR launches — this is the shape of the board, with sample hunters.</p>
+            <p>Like ClankDex's trading games, but for ears. Every week, the hunters who caught launches earliest climb the board. Season 0 opens now that $CLANKR is live — this is the shape of the board, with sample hunters.</p>
           </div>
           <div class="panel">
             <div class="panel-bar">
               <span class="title">Clank Board · Season 0</span>
-              <span class="tag hot">Opens at launch</span>
+              <span class="tag hot">Season 0 · Open</span>
               <span class="tag">Resets every Monday</span>
             </div>
             <div class="board-row head" aria-hidden="true">
@@ -750,7 +767,34 @@
             <div class="board-row"><span class="rank">3</span><span class="who">nightshift.clankr<small>Owns the 02:00–05:00 launch window</small></span><span class="num hide-m">39</span><span class="num">7,960</span></div>
             <div class="board-row"><span class="rank">4</span><span class="who">rivetkid.clankr<small>Rookie — first week on the board</small></span><span class="num hide-m">33</span><span class="num">6,540</span></div>
             <div class="board-row"><span class="rank">5</span><span class="who">lowhum.clankr<small>Quiet, early, never late</small></span><span class="num hide-m">31</span><span class="num">6,105</span></div>
-            <p class="panel-note">Sample board for Season 0's format. Real rankings start counting at launch — reserve your .clankr name above to be on it from day one.</p>
+            <p class="panel-note">Sample board for Season 0's format. Real rankings count from launch — reserve your .clankr name above to be on it from day one.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- LAUNCH & AIRDROP -->
+      <section id="airdrop" aria-labelledby="airdrop-h" style="padding-top:8px">
+        <div class="wrap">
+          <div class="sec-head">
+            <h2 id="airdrop-h">A token for the people who <span class="accent">were already here</span></h2>
+            <p>$CLANKR isn't a token looking for a community — it starts with one. It's built for the people who keep the Clanker ecosystem moving every day: the launch hunters on the radar, the names climbing the Clank Board, and the holders who believed in the machine long before it got loud. $CLANKR launched to them first.</p>
+          </div>
+          <div class="concept">
+            <div class="concept-row">
+              <span class="num">01</span>
+              <h3>Made for the active</h3>
+              <p>Clankr belongs to the community that actually shows up — hunting launches, trading on Base, and keeping the machine fed around the clock. If you're active in the ecosystem, this token was made with you in mind.</p>
+            </div>
+            <div class="concept-row">
+              <span class="num">02</span>
+              <h3>Airdropped to $CLANKER holders</h3>
+              <p>A share of the supply is reserved as an airdrop for holders of Clanker's official token — tokenbot, $CLANKER. Hold $CLANKER in your wallet and you're already on the list: a community more than 500,000 wallets strong, rewarded for being early to the machine itself.</p>
+            </div>
+            <div class="concept-row">
+              <span class="num">03</span>
+              <h3>Locked one day. Then yours.</h3>
+              <p>Airdropped tokens stay locked for 24 hours after the drop — one day, that's it. No vesting schedule, no cliff, no drip. When the day is up, the full amount unlocks and it's yours to hold, trade, or hear the next clank with.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -766,11 +810,13 @@
             <div class="tok-row"><dt>Token</dt><dd>Clankr <span>— ticker $CLANKR</span></dd></div>
             <div class="tok-row"><dt>Total supply</dt><dd>100,000,000,000 CLANKR <span>— fixed at deploy, no mint after</span></dd></div>
             <div class="tok-row"><dt>Chain</dt><dd>Base</dd></div>
-            <div class="tok-row"><dt>Launch</dt><dd>Fair launch via Clanker <span>— full supply into the pool at once</span></dd></div>
+            <div class="tok-row"><dt>Launch</dt><dd>Fair launch via Clanker <span>— supply live in the open at once, community airdrop reserved</span></dd></div>
             <div class="tok-row"><dt>Presale</dt><dd>None</dd></div>
+            <div class="tok-row"><dt>Trading tax</dt><dd>3% <span>— one flat fee on buys and sells, fixed at launch</span></dd></div>
+            <div class="tok-row"><dt>Airdrop</dt><dd>For $CLANKER (tokenbot) holders <span>— 500,000+ wallets, locked for 1 day, then fully unlocked</span></dd></div>
             <div class="tok-row"><dt>Team / insider allocation</dt><dd>None <span>— no vesting, no locked team bag</span></dd></div>
             <div class="tok-row"><dt>Liquidity</dt><dd>Locked by Clanker at launch</dd></div>
-            <div class="tok-row"><dt>Contract address</dt><dd>Published on this page at launch <span>— trust no other source</span></dd></div>
+            <div class="tok-row"><dt>Contract address</dt><dd><span class="mono" style="font-weight:600;color:var(--ink);word-break:break-all">0xBF11cd05f53c7e9890926adB015C288D22c7Fb07</span> <span>— trust no other source</span></dd></div>
           </dl>
         </div>
       </section>
@@ -779,7 +825,7 @@
       <section aria-labelledby="buy-h" style="padding-top:8px">
         <div class="wrap">
           <div class="sec-head">
-            <h2 id="buy-h">How to buy, when it clanks</h2>
+            <h2 id="buy-h">How to buy</h2>
           </div>
           <div class="steps">
             <div class="step">
@@ -794,8 +840,8 @@
             </div>
             <div class="step">
               <span class="n">3</span>
-              <h3>Wait for the CA here</h3>
-              <p>The contract address drops on this page at launch — and nowhere else first. Anything posted earlier, anywhere, is not it.</p>
+              <h3>Copy the CA here</h3>
+              <p>The contract address is live in the trade panel above — copy it from there and check it on Basescan. Trust no other source.</p>
             </div>
             <div class="step">
               <span class="n">4</span>
@@ -810,16 +856,24 @@
               <p>No. Clankr is an independent token and community project built on top of the Clanker ecosystem on Base. It is not made by, endorsed by, or affiliated with the Clanker team — it just loves the sound the machine makes.</p>
             </details>
             <details>
-              <summary>When does $CLANKR launch?</summary>
-              <p>When it's ready to be fair: low starting market cap, a clean sellable contract, and the announcement made after the pool is live — never a countdown before it. The contract address will appear on this page at that moment.</p>
+              <summary>Is $CLANKR live?</summary>
+              <p>Yes — $CLANKR is live on Base, launched fair via Clanker with a low starting market cap and a clean, sellable contract. The contract address is <span class="mono">0xBF11cd05f53c7e9890926adB015C288D22c7Fb07</span> — it's in the trade panel above, and it's the only one to trust.</p>
+            </details>
+            <details>
+              <summary>Who gets the $CLANKR airdrop?</summary>
+              <p>Holders of Clanker's official token — tokenbot, $CLANKER. If your wallet holds $CLANKER, you're on the list alongside 500,000+ other wallets. Airdropped tokens are locked for 24 hours after the drop, then unlock in full — no vesting, no cliff.</p>
+            </details>
+            <details>
+              <summary>What is the 3% tax?</summary>
+              <p>Every buy and sell carries one flat 3% fee, set at launch and the same in both directions. No hidden charges, no honeypot mechanics — the contract stays clean and sellable at all times.</p>
             </details>
             <details>
               <summary>Is the radar live?</summary>
-              <p>Not yet — what you see is a preview feed with sample launches showing how signal strength will read. The live Base feed plugs in at launch, along with the Clank Board's first real season.</p>
+              <p>Not yet — what you see is a preview feed with sample launches showing how signal strength will read. The live Base feed and the Clank Board's first real season roll out next; $CLANKR itself is already live.</p>
             </details>
             <details>
               <summary>Can I mint a .clankr name today?</summary>
-              <p>Real on-chain names need their own contract, so today you can reserve: check your name above and hold the spot in this session. Reservations get first claim when minting opens at launch.</p>
+              <p>Real on-chain names need their own contract, so today you can reserve: check your name above and hold the spot in this session. Reservations get first claim when minting opens.</p>
             </details>
           </div>
         </div>
@@ -835,10 +889,11 @@
             <a href="#trade">Trade</a>
             <a href="#names">.clankr Names</a>
             <a href="#board">Clank Board</a>
+            <a href="#airdrop">Airdrop</a>
             <a href="https://clanker.world" target="_blank" rel="noopener">Clanker ↗</a>
           </nav>
         </div>
-        <p class="disclaimer">Clankr ($CLANKR) is an independent community token. It is not affiliated with or endorsed by Clanker or Coinbase/Base. Cryptocurrency is volatile and can lose all value — nothing on this page is financial advice, and the radar and board previews use sample data until the live launch. Always verify the contract address on this page before buying anything.</p>
+        <p class="disclaimer">Clankr ($CLANKR) is an independent community token. It is not affiliated with or endorsed by Clanker or Coinbase/Base. Cryptocurrency is volatile and can lose all value — nothing on this page is financial advice, and the radar and board previews use sample data. Always verify the contract address on this page before buying anything.</p>
         <p class="disclaimer mono" style="margin-top:10px">© 2026 CLANKR · Built on Base · Hear the clank</p>
       </div>
     </footer>
@@ -926,6 +981,38 @@
         });
       })();
 
+      // Copy the contract address
+      (function () {
+        var btn = document.getElementById("copyCaBtn");
+        var val = document.getElementById("caValue");
+        if (!btn || !val) return;
+        var address = val.textContent.trim();
+        function done() {
+          btn.textContent = "Copied ✓";
+          btn.classList.add("copied");
+          setTimeout(function () {
+            btn.textContent = "Copy";
+            btn.classList.remove("copied");
+          }, 2000);
+        }
+        btn.addEventListener("click", function () {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(address).then(done, function () { fallback(); });
+          } else { fallback(); }
+          function fallback() {
+            var ta = document.createElement("textarea");
+            ta.value = address;
+            ta.setAttribute("readonly", "");
+            ta.style.position = "absolute";
+            ta.style.left = "-9999px";
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand("copy"); done(); } catch (e) { /* clipboard unavailable */ }
+            document.body.removeChild(ta);
+          }
+        });
+      })();
+
       // .clankr name checker + session reservations (in-memory only)
       (function () {
         var input = document.getElementById("nameInput");
@@ -960,7 +1047,7 @@
             '<span class="ok">✓ ' + raw + '.clankr — clean shape, good ears.</span>' +
             "<p>" + (already
               ? "Already holding that one for you in this session."
-              : "Reserved for you in this session. On-chain minting opens at launch, and reservations claim first — the format check is done, the name is yours to grab the moment it clanks.") + "</p>";
+              : "Reserved for you in this session. On-chain minting opens with its own contract, and reservations claim first — the format check is done, the name is yours to grab the moment it clanks.") + "</p>";
           input.value = "";
         }
         checkBtn.addEventListener("click", runCheck);
